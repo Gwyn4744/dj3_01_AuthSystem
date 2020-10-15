@@ -55,4 +55,6 @@ def login_page(request):
         return render(request, 'auth_system/login.html')
 
 def logout_page(request):
-    return render(request, 'auth_system/logout.html')
+    if request.method == 'POST':
+        auth.logout(request)
+        return redirect('home')
