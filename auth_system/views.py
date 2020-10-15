@@ -42,7 +42,17 @@ def signup_page(request):
         return render(request, 'auth_system/signup.html', context)
 
 def login_page(request):
-    return render(request, 'auth_system/login.html')
+    context = {}
+    if request.method == 'POST':
+        user = auth.authenticate(username=request.POST['username'] ,password=request.POST['password'])
+        if user is not None:
+            auth.login(request, user)
+            return redirect('home')
+        else:
+            context['error'] = 'Podane hasło lub login są błędne! Podaj poprawne dane.'
+            return render(request, 'auth_system/login.html', context)
+    else:
+        return render(request, 'auth_system/login.html')
 
 def logout_page(request):
     return render(request, 'auth_system/logout.html')
