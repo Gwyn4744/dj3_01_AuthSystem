@@ -15,9 +15,10 @@
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
       <h5 class="my-0 mr-md-auto font-weight-normal">AUTH SYSTEM</h5>
       <nav class="my-2 my-md-0 mr-md-3">
-        <a class="btn btn-outline-primary" href="#">Zarejestruj się</a>
-        <a class="btn btn-outline-primary" href="#">Zaloguj się</a>
-        <a class="btn btn-outline-danger" href="#">Wyloguj się</a>
+        <a class="btn btn-outline-primary" href="{% url 'home' %}">HOME</a>
+        <a class="btn btn-outline-primary" href="{% url 'signup_page' %}">Zarejestruj się</a>
+        <a class="btn btn-outline-primary" href="{% url 'login_page' %}">Zaloguj się</a>
+        <a class="btn btn-outline-danger" href="{% url 'logout_page' %}">Wyloguj się</a>
       </nav>
     </div>
 
