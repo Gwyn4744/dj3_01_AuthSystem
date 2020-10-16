@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.contrib import auth
+from django.views import View
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 # Create your views here.
@@ -58,3 +61,14 @@ def logout_page(request):
     if request.method == 'POST':
         auth.logout(request)
         return redirect('home')
+
+def public_page(request):
+    return render(request, 'auth_system/publicpage.html')
+
+@login_required
+def private_page(request):
+    return render(request, 'auth_system/privatepage.html')
+
+class PrivateClass_page(LoginRequiredMixin, View):
+    def get(self, request):
+        return render(request, 'auth_system/privateclasspage.html')
