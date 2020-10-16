@@ -50,12 +50,22 @@ def login_page(request):
         user = auth.authenticate(username=request.POST['username'] ,password=request.POST['password'])
         if user is not None:
             auth.login(request, user)
-            return redirect('home')
+            if request.POST.get('redir'):
+                return redirect(f"{request.POST.get('redir')}")
+            else:
+                return redirect('home')
         else:
             context['error'] = 'Podane hasło lub login są błędne! Podaj poprawne dane.'
+            if request.POST.get('redir'):
+                context['next'] = 'Tylko zalogowani użytkonicy mają dostęp do tej strony! Zaloguj się.'
+                context['nextURL'] = request.GET.get('next')
             return render(request, 'auth_system/login.html', context)
     else:
-        return render(request, 'auth_system/login.html')
+        if request.GET.get('next'):
+            context['next'] = 'Tylko zalogowani użytkonicy mają dostęp do tej strony! Zaloguj się.'
+            context['nextURL'] = request.GET.get('next')
+        return render(request, 'auth_system/login.html', context)
+
 
 def logout_page(request):
     if request.method == 'POST':
